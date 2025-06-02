@@ -18,6 +18,7 @@ pkgs.nixosTest {
 
   testScript = ''
     machine.wait_for_unit("mdatp.service")
+    machine.sleep(5)
     machine.succeed("mdatp version")
   '';
 }

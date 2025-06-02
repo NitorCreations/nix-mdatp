@@ -14,7 +14,6 @@
   openssl,
   gcc,
   libcap,
-  pcre,
   acl,
   zlib,
   gzip,
@@ -22,6 +21,7 @@
   sqlite,
   coreutils,
   gnugrep,
+  pcre2,
   nixosTests,
 }:
 let
@@ -36,19 +36,19 @@ let
     openssl
     gcc.cc.lib # Specifically for libatomic
     libcap
-    pcre
     acl
     zlib
     fuse
     sqlite
+    pcre2
   ];
 in
 stdenv.mkDerivation rec {
   pname = "mdatp";
-  version = "101.25012.0000";
+  version = "101.25042.0002";
   src = fetchurl {
-    url = "https://packages.microsoft.com/debian/12/prod/pool/main/m/${pname}/${pname}_${version}_amd64.deb";
-    hash = "sha256-EBnfz4z1t4jwGPKZIKTK1TFacV3UA3BAD1lS+ixs2TE=";
+    url = "https://packages.microsoft.com/ubuntu/24.04/prod/pool/main/m/${pname}/${pname}_${version}_amd64.deb";
+    hash = "sha256-hKbABEAykANddyDDRktafjv/y1eLaXAgvTjt0FQVtjI=";
   };
 
   nativeBuildInputs = [ dpkg makeWrapper ];
