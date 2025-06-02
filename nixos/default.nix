@@ -29,10 +29,10 @@ in {
     enable = lib.mkEnableOption "Whether to enable Microsoft Defender Advanced Threat Protection.";
     package = lib.mkPackageOption pkgs "mdatp" { };
     enableBashIntegration = lib.mkEnableOption "Enable Bash integration" // {
-      default = true;
+      default = false;
     };
     enableZshIntegration = lib.mkEnableOption "Enable Zsh integration" // {
-      default = true;
+      default = false;
     };
   };
 
@@ -50,6 +50,8 @@ in {
 
     programs.nix-ld.enable = lib.mkForce true;  # nix-ld is required for mdatp to function without tripping anti-tamper measures
     programs.bash.interactiveShellInit = lib.mkIf cfg.enableBashIntegration "source ${cfg.package}/resources/mdatp_completion.bash # enable shell integration for mdatp";
+    # TODO: this seems like a hack, as having this enabled gets the following error:
+    # "_arguments:comparguments:327: can only be called from completion function"
     programs.zsh.interactiveShellInit  = lib.mkIf cfg.enableZshIntegration  "source ${cfg.package}/resources/mdatp_completion.zsh  # enable shell integration for mdatp";
 
     systemd.services.mdatp = {
