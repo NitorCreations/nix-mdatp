@@ -75,6 +75,11 @@ stdenv.mkDerivation rec {
         --prefix NIX_LD_LIBRARY_PATH : $out/lib:${libPath} \
         --prefix PATH : ${lib.makeBinPath [ coreutils gnugrep ]} ;
     done
+    # Install completions
+    mkdir -p $out/share/bash-completion/completions $out/share/zsh/site-functions
+
+    cp opt/microsoft/mdatp/resources/mdatp_completion.bash $out/share/bash-completion/completions/mdatp
+    cp opt/microsoft/mdatp/resources/mdatp_completion.zsh $out/share/zsh/site-functions/_mdatp
 
     runHook postInstall
   '';

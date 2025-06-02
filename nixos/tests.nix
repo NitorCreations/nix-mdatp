@@ -9,8 +9,6 @@ pkgs.nixosTest {
 
     services.mdatp = {
       enable = true;
-      enableBashIntegration = true;
-      enableZshIntegration = true;
     };
 
     system.stateVersion = "24.11";
