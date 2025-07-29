@@ -16,13 +16,11 @@
   libcap,
   acl,
   zlib,
-  gzip,
   fuse,
   sqlite,
   coreutils,
   gnugrep,
   pcre2,
-  nixosTests,
 }:
 let
   libPath = lib.makeLibraryPath [
@@ -45,13 +43,16 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "mdatp";
-  version = "101.25042.0002";
+  version = "101.25052.0007";
   src = fetchurl {
     url = "https://packages.microsoft.com/ubuntu/24.04/prod/pool/main/m/${pname}/${pname}_${version}_amd64.deb";
-    hash = "sha256-hKbABEAykANddyDDRktafjv/y1eLaXAgvTjt0FQVtjI=";
+    hash = "sha256-YsUrf8vK+Mlpe03f6lE5BdjBgXt3wU91yxfF39u8SUg=";
   };
 
-  nativeBuildInputs = [ dpkg makeWrapper ];
+  nativeBuildInputs = [
+    dpkg
+    makeWrapper
+  ];
 
   installPhase = ''
     runHook preInstall
@@ -73,7 +74,12 @@ stdenv.mkDerivation rec {
       wrapProgram $executable \
         --set-default NIX_LD $(cat $NIX_CC/nix-support/dynamic-linker) \
         --prefix NIX_LD_LIBRARY_PATH : $out/lib:${libPath} \
-        --prefix PATH : ${lib.makeBinPath [ coreutils gnugrep ]} ;
+        --prefix PATH : ${
+          lib.makeBinPath [
+            coreutils
+            gnugrep
+          ]
+        } ;
     done
     # Install completions
     mkdir -p $out/share/bash-completion/completions $out/share/zsh/site-functions
@@ -86,10 +92,12 @@ stdenv.mkDerivation rec {
 
   dontPatchELF = true;
 
-  /*passthru = {
-    updateScript = ./update.sh;
-    tests = { inherit (nixosTests) intune; };
-  };*/
+  /*
+    passthru = {
+      updateScript = ./update.sh;
+      tests = { inherit (nixosTests) intune; };
+    };
+  */
 
   meta = with lib; {
     description = "Microsoft Defender Advanced Threat Protection for Endpoints";
