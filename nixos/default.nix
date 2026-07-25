@@ -64,7 +64,6 @@ in {
         Delegate="yes";
       };
       unitConfig = {
-        DefaultDependencies = false;
         # Don't restart if we've restarted more than 3 times in 2 minutes.
         StartLimitInterval=120;
         StartLimitBurst=3;
