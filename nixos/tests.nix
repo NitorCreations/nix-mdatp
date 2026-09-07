@@ -19,6 +19,8 @@ pkgs.nixosTest {
   testScript = ''
     machine.wait_for_unit("mdatp.service")
     machine.wait_until_succeeds("mdatp version")
+    version = machine.succeed("mdatp version").strip()
+    assert "Product version: ${pkgs.mdatp.version}" in version.splitlines(), version
     # Defender must stop before systemd reaches its final shutdown phase.
     machine.succeed("systemctl show mdatp.service --property=Conflicts --value | grep -qw shutdown.target")
   '';

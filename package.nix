@@ -43,10 +43,10 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "mdatp";
-  version = "101.26052.0011";
+  version = "101.26072.0004";
   src = fetchurl {
     url = "https://packages.microsoft.com/ubuntu/24.04/prod/pool/main/m/${pname}/${pname}_${version}_amd64.deb";
-    hash = "sha256-a5z+oo+yp4Rpbv0uAcHbGsP0lDg8d3gb6l1MkyKCrzA=";
+    hash = "sha256-vI8anR9r9SWUkvRCVkL4ZNjQ0AfA3+Ea7GpauS7y3sY=";
   };
 
   nativeBuildInputs = [
